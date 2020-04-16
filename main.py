@@ -8,7 +8,7 @@ API_VERSION = 'v4'
 
 
 def get_request_url(method, version=API_VERSION):
-    return HOST + '/{version}/{method}'.format(version=version, method=method)
+    return f'{HOST}/{version}/{method}'
 
 
 def shorten_link(url, token):
@@ -54,14 +54,14 @@ def main():
 
     load_dotenv()
 
-    token = os.getenv('TOKEN')
+    bitly_token = os.getenv('BITLY_TOKEN')
     url = args.url
 
     try:
         if not url.startswith('bit.ly/'):
-            print('Битлинк', shorten_link(url, token))
+            print('Битлинк', shorten_link(url, bitly_token))
         else:
-            print('Статистика переходов по ссылке:\n', count_clicks(url, token))
+            print('Статистика переходов по ссылке:\n', count_clicks(url, bitly_token))
     except requests.exceptions.HTTPError as ex:
         print(ex, '\n')
 
